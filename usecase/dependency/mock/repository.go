@@ -63,7 +63,7 @@ func (mr *MockOrderRepositoryMockRecorder) SaveOrder(arg0, arg1 interface{}) *go
 }
 
 // UpdateOrderState mocks base method.
-func (m *MockOrderRepository) UpdateOrderState(arg0 uuid.UUID, arg1 string) {
+func (m *MockOrderRepository) UpdateOrderState(arg0 uuid.UUID, arg1 model.OrderState) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "UpdateOrderState", arg0, arg1)
 }
