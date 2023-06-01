@@ -41,8 +41,9 @@ func TestReadOrder(t *testing.T) {
 	someOrdersMap := map[uuid.UUID]*model.Order{}
 	someOrdersMap[someUUID] = expectedOrder
 	repository.storedOrders = someOrdersMap
-	readOrder := repository.ReadOrder(someUUID)
+	readOrder, err := repository.ReadOrder(someUUID)
 	assert.Equal(t, expectedOrder, readOrder)
+	assert.NoError(t, err)
 }
 
 func TestUpdateOrderState(t *testing.T) {
@@ -59,6 +60,7 @@ func TestUpdateOrderState(t *testing.T) {
 	expectedState := "completed"
 	repository.UpdateOrderState(someUUID, expectedState)
 
-	readOrder := repository.ReadOrder(someUUID)
+	readOrder, found := repository.storedOrders[someUUID]
 	assert.Equal(t, expectedState, readOrder.State)
+	assert.True(t, found)
 }
