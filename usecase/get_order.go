@@ -2,16 +2,16 @@ package usecase
 
 import (
 	"cadence-demo/model"
-	"cadence-demo/repository"
+	"cadence-demo/usecase/dependency"
 	"context"
 	"github.com/google/uuid"
 )
 
 type GetOrderUsecase struct {
-	repository *repository.Repository
+	repository dependency.OrderRepository
 }
 
-func NewGetOrderUsecase(repository *repository.Repository) *GetOrderUsecase {
+func NewGetOrderUsecase(repository dependency.OrderRepository) *GetOrderUsecase {
 	return &GetOrderUsecase{
 		repository: repository,
 	}
