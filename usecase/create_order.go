@@ -19,4 +19,8 @@ func NewCreateOrderUsecase(repository dependency.OrderRepository) *CreateOrderUs
 
 func (uc *CreateOrderUsecase) CreateOrder(ctx context.Context, request model.CreateOrderRequest) (uuid.UUID, error) {
 	return uuid.New(), nil
+
+	// save order to repo
+	// start do async processing
+	// 		update order state
 }
