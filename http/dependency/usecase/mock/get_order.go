@@ -6,7 +6,6 @@ package mock
 
 import (
 	model "cadence-demo/model"
-	context "context"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
@@ -37,16 +36,16 @@ func (m *MockGetOrderUsecase) EXPECT() *MockGetOrderUsecaseMockRecorder {
 }
 
 // GetOrder mocks base method.
-func (m *MockGetOrderUsecase) GetOrder(arg0 context.Context, arg1 uuid.UUID) (*model.GetOrderResponse, error) {
+func (m *MockGetOrderUsecase) GetOrder(arg0 uuid.UUID) (*model.GetOrderResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetOrder", arg0, arg1)
+	ret := m.ctrl.Call(m, "GetOrder", arg0)
 	ret0, _ := ret[0].(*model.GetOrderResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetOrder indicates an expected call of GetOrder.
-func (mr *MockGetOrderUsecaseMockRecorder) GetOrder(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockGetOrderUsecaseMockRecorder) GetOrder(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrder", reflect.TypeOf((*MockGetOrderUsecase)(nil).GetOrder), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrder", reflect.TypeOf((*MockGetOrderUsecase)(nil).GetOrder), arg0)
 }

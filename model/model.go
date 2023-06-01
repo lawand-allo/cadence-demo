@@ -8,10 +8,8 @@ type CreateOrderRequest struct {
 }
 
 type GetOrderResponse struct {
-	OrderId   uuid.UUID `json:"orderId" binding:"required"`
-	OrderName string    `json:"name" binding:"required"`
-	State     string    `json:"state" binding:"required"`
-	PickUp    bool      `json:"pickUp" binding:"required"`
+	OrderId uuid.UUID `json:"orderId" binding:"required"`
+	Order
 }
 
 type Order struct {

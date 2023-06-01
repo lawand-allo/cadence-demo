@@ -36,11 +36,12 @@ func (m *MockOrderRepository) EXPECT() *MockOrderRepositoryMockRecorder {
 }
 
 // ReadOrder mocks base method.
-func (m *MockOrderRepository) ReadOrder(arg0 uuid.UUID) *model.Order {
+func (m *MockOrderRepository) ReadOrder(arg0 uuid.UUID) (*model.Order, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ReadOrder", arg0)
 	ret0, _ := ret[0].(*model.Order)
-	return ret0
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // ReadOrder indicates an expected call of ReadOrder.
