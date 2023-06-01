@@ -13,7 +13,16 @@ type GetOrderResponse struct {
 }
 
 type Order struct {
-	OrderName string `json:"name" binding:"required"`
-	State     string `json:"state" binding:"required"`
-	PickUp    bool   `json:"pickUp" binding:"required"`
+	OrderName string     `json:"name" binding:"required"`
+	State     OrderState `json:"state" binding:"required"`
+	PickUp    bool       `json:"pickUp" binding:"required"`
 }
+
+type OrderState string
+
+const (
+	Pending   OrderState = "PENDING"
+	Running   OrderState = "RUNNING"
+	Completed OrderState = "COMPLETED"
+	Failed    OrderState = "FAILED"
+)

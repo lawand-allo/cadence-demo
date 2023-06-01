@@ -17,7 +17,7 @@ func TestGetOrder(t *testing.T) {
 	someUUID := uuid.New()
 	someOrder := &model.Order{
 		OrderName: "burger",
-		State:     "completed",
+		State:     model.Completed,
 		PickUp:    true,
 	}
 	mockRepository.EXPECT().ReadOrder(someUUID).Times(1).Return(someOrder, nil)

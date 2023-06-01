@@ -16,7 +16,7 @@ func TestSaveOrder(t *testing.T) {
 	someUUID := uuid.New()
 	expectedOrder := model.Order{
 		OrderName: "pizza margherita",
-		State:     "pending",
+		State:     model.Pending,
 		PickUp:    true,
 	}
 	expectedOrdersMap := map[uuid.UUID]*model.Order{}
@@ -35,7 +35,7 @@ func TestReadOrder(t *testing.T) {
 	someUUID := uuid.New()
 	expectedOrder := &model.Order{
 		OrderName: "pizza margherita",
-		State:     "completed",
+		State:     model.Completed,
 		PickUp:    true,
 	}
 	someOrdersMap := map[uuid.UUID]*model.Order{}
@@ -51,13 +51,13 @@ func TestUpdateOrderState(t *testing.T) {
 	someUUID := uuid.New()
 	testOrder := model.Order{
 		OrderName: "pizza margherita",
-		State:     "pending",
+		State:     model.Pending,
 		PickUp:    false,
 	}
 	someOrdersMap := map[uuid.UUID]*model.Order{}
 	someOrdersMap[someUUID] = &testOrder
 	repository.storedOrders = someOrdersMap
-	expectedState := "completed"
+	expectedState := model.Completed
 	repository.UpdateOrderState(someUUID, expectedState)
 
 	readOrder, found := repository.storedOrders[someUUID]

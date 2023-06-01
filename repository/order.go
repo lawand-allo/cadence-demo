@@ -29,6 +29,6 @@ func (r *Repository) ReadOrder(orderId uuid.UUID) (*model.Order, error) {
 	return order, nil
 }
 
-func (r *Repository) UpdateOrderState(orderId uuid.UUID, state string) {
+func (r *Repository) UpdateOrderState(orderId uuid.UUID, state model.OrderState) {
 	(&*r.storedOrders[orderId]).State = state
 }

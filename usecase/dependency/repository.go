@@ -10,5 +10,5 @@ import (
 type OrderRepository interface {
 	ReadOrder(orderId uuid.UUID) (*model.Order, error)
 	SaveOrder(orderId uuid.UUID, order model.Order)
-	UpdateOrderState(orderId uuid.UUID, state string)
+	UpdateOrderState(orderId uuid.UUID, state model.OrderState)
 }

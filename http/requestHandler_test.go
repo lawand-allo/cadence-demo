@@ -81,7 +81,7 @@ func TestHandleGetOrder(t *testing.T) {
 		OrderId: orderUUID,
 		Order: model.Order{
 			OrderName: "pizza",
-			State:     "pending",
+			State:     model.Pending,
 			PickUp:    false,
 		},
 	}
