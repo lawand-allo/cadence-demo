@@ -15,14 +15,14 @@ func NewRepository() *Repository {
 	}
 }
 
-func (r *Repository) saveOrder(orderId uuid.UUID, order model.Order) {
+func (r *Repository) SaveOrder(orderId uuid.UUID, order model.Order) {
 	r.storedOrders[orderId] = &order
 }
 
-func (r *Repository) readOrder(orderId uuid.UUID) *model.Order {
+func (r *Repository) ReadOrder(orderId uuid.UUID) *model.Order {
 	return r.storedOrders[orderId]
 }
 
-func (r *Repository) updateOrderState(orderId uuid.UUID, state string) {
+func (r *Repository) UpdateOrderState(orderId uuid.UUID, state string) {
 	(&*r.storedOrders[orderId]).State = state
 }
