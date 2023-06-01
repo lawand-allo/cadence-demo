@@ -2,7 +2,6 @@ package http
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func NewRouter() *gin.Engine {
@@ -15,16 +14,14 @@ func NewRouter() *gin.Engine {
 		handleHealth(ctx)
 	}))
 
-	return router
-}
-
-func handleIndex(ctx *gin.Context) {
-	ctx.Status(http.StatusOK)
-}
-
-func handleHealth(ctx *gin.Context) {
-	type output struct {
-		Alive bool `json:"alive"`
+	commonGroup := router.Group("/order")
+	{
+		commonGroup.POST("/", gin.HandlerFunc(func(ctx *gin.Context) {
+			handlePostOrder(ctx)
+		}))
+		commonGroup.GET("/:tripId", gin.HandlerFunc(func(ctx *gin.Context) {
+			handleGetOrder(ctx)
+		}))
 	}
-	ctx.JSON(http.StatusOK, &output{Alive: true})
+	return router
 }
