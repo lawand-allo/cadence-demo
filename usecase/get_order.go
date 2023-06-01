@@ -11,12 +11,12 @@ type GetOrderUsecase struct {
 	repository *repository.Repository
 }
 
-func NewGetOrderUsecase(repository *repository.Repository) *CreateOrderUsecase {
-	return &CreateOrderUsecase{
+func NewGetOrderUsecase(repository *repository.Repository) *GetOrderUsecase {
+	return &GetOrderUsecase{
 		repository: repository,
 	}
 }
 
-func GetOrder(ctx context.Context, orderId uuid.UUID) (*model.GetOrderResponse, error) {
+func (uc *GetOrderUsecase) GetOrder(ctx context.Context, orderId uuid.UUID) (*model.GetOrderResponse, error) {
 	return &model.GetOrderResponse{}, nil
 }

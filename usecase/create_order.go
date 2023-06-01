@@ -17,6 +17,6 @@ func NewCreateOrderUsecase(repository *repository.Repository) *CreateOrderUsecas
 	}
 }
 
-func CreateOrder(ctx context.Context, request model.CreateOrderRequest) (uuid.UUID, error) {
+func (uc *CreateOrderUsecase) CreateOrder(ctx context.Context, request model.CreateOrderRequest) (uuid.UUID, error) {
 	return uuid.New(), nil
 }

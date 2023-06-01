@@ -18,7 +18,7 @@ func (h *Handler) setupRoutes() {
 		commonGroup.POST("/", gin.HandlerFunc(func(ctx *gin.Context) {
 			h.handlePostOrder(ctx)
 		}))
-		commonGroup.GET("/:tripId", gin.HandlerFunc(func(ctx *gin.Context) {
+		commonGroup.GET("/:orderId", gin.HandlerFunc(func(ctx *gin.Context) {
 			h.handleGetOrder(ctx)
 		}))
 	}
