@@ -2,25 +2,42 @@ package http
 
 import (
 	"cadence-demo/model"
-	"cadence-demo/usecase/order"
+	"cadence-demo/usecase"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	"net/http"
 )
 
-func handleIndex(ctx *gin.Context) {
+type Handler struct {
+	CreateOrderUsecase *usecase.CreateOrderUsecase
+	GetOrderUsecase    *usecase.CreateOrderUsecase
+	router             *gin.Engine
+}
+
+func NewHandler(createOrderUsecase *usecase.CreateOrderUsecase, getOrderUsecase *usecase.CreateOrderUsecase) *Handler {
+	router := gin.New()
+	handler := &Handler{
+		CreateOrderUsecase: createOrderUsecase,
+		GetOrderUsecase:    getOrderUsecase,
+		router:             router,
+	}
+	handler.setupRoutes()
+	return handler
+}
+
+func (h *Handler) handleIndex(ctx *gin.Context) {
 	ctx.Status(http.StatusOK)
 }
 
-func handleHealth(ctx *gin.Context) {
+func (h *Handler) handleHealth(ctx *gin.Context) {
 	type output struct {
 		Alive bool `json:"alive"`
 	}
 	ctx.JSON(http.StatusOK, &output{Alive: true})
 }
 
-func handleGetOrder(ctx *gin.Context) {
+func (h *Handler) handleGetOrder(ctx *gin.Context) {
 	orderId := ctx.Query("orderId")
 	if orderId == "" {
 		ctx.Error(errors.New("required path parameter 'orderId' can't be empty"))
@@ -33,7 +50,7 @@ func handleGetOrder(ctx *gin.Context) {
 		ctx.Status(http.StatusBadRequest)
 		return
 	}
-	response, getOrderErr := order.GetOrder(ctx.Request.Context(), orderUUID)
+	response, getOrderErr := usecase.GetOrder(ctx.Request.Context(), orderUUID)
 	if getOrderErr != nil {
 		ctx.Error(errors.WithMessage(getOrderErr, "couldn't retrieve the specified order"))
 		ctx.Status(http.StatusInternalServerError)
@@ -43,7 +60,7 @@ func handleGetOrder(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, response)
 }
 
-func handlePostOrder(ctx *gin.Context) {
+func (h *Handler) handlePostOrder(ctx *gin.Context) {
 	var createOrderRequest model.CreateOrderRequest
 
 	parseError := ctx.Bind(&createOrderRequest)
@@ -51,7 +68,7 @@ func handlePostOrder(ctx *gin.Context) {
 		ctx.Error(errors.Wrap(parseError, "error parsing the request body. Please check the API specification"))
 		return
 	}
-	orderId, createOrderErr := order.CreateOrder(ctx.Request.Context(), createOrderRequest)
+	orderId, createOrderErr := usecase.CreateOrder(ctx.Request.Context(), createOrderRequest)
 	if createOrderErr != nil {
 		ctx.Error(errors.WithMessage(createOrderErr, "couldn't create an order"))
 		ctx.Status(http.StatusInternalServerError)
@@ -59,4 +76,8 @@ func handlePostOrder(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, orderId)
+}
+
+func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	h.router.ServeHTTP(w, r)
 }
