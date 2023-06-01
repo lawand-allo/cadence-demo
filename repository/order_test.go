@@ -1,4 +1,4 @@
-package order
+package repository
 
 import (
 	"cadence-demo/model"
