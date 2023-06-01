@@ -50,7 +50,7 @@ func (h *Handler) handleGetOrder(ctx *gin.Context) {
 		ctx.Status(http.StatusBadRequest)
 		return
 	}
-	response, getOrderErr := h.GetOrderUsecase.GetOrder(ctx.Request.Context(), orderUUID)
+	response, getOrderErr := h.GetOrderUsecase.GetOrder(orderUUID)
 	if getOrderErr != nil {
 		ctx.Error(errors.WithMessage(getOrderErr, "couldn't retrieve the specified order"))
 		ctx.Status(http.StatusInternalServerError)

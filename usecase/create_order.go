@@ -2,16 +2,16 @@ package usecase
 
 import (
 	"cadence-demo/model"
-	"cadence-demo/repository"
+	"cadence-demo/usecase/dependency"
 	"context"
 	"github.com/google/uuid"
 )
 
 type CreateOrderUsecase struct {
-	repository *repository.Repository
+	repository dependency.OrderRepository
 }
 
-func NewCreateOrderUsecase(repository *repository.Repository) *CreateOrderUsecase {
+func NewCreateOrderUsecase(repository dependency.OrderRepository) *CreateOrderUsecase {
 	return &CreateOrderUsecase{
 		repository: repository,
 	}
@@ -19,4 +19,8 @@ func NewCreateOrderUsecase(repository *repository.Repository) *CreateOrderUsecas
 
 func (uc *CreateOrderUsecase) CreateOrder(ctx context.Context, request model.CreateOrderRequest) (uuid.UUID, error) {
 	return uuid.New(), nil
+
+	// save order to repo
+	// start do async processing
+	// 		update order state
 }

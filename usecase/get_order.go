@@ -2,21 +2,28 @@ package usecase
 
 import (
 	"cadence-demo/model"
-	"cadence-demo/repository"
-	"context"
+	"cadence-demo/usecase/dependency"
 	"github.com/google/uuid"
 )
 
 type GetOrderUsecase struct {
-	repository *repository.Repository
+	repository dependency.OrderRepository
 }
 
-func NewGetOrderUsecase(repository *repository.Repository) *GetOrderUsecase {
+func NewGetOrderUsecase(repository dependency.OrderRepository) *GetOrderUsecase {
 	return &GetOrderUsecase{
 		repository: repository,
 	}
 }
 
-func (uc *GetOrderUsecase) GetOrder(ctx context.Context, orderId uuid.UUID) (*model.GetOrderResponse, error) {
-	return &model.GetOrderResponse{}, nil
+func (uc *GetOrderUsecase) GetOrder(orderId uuid.UUID) (*model.GetOrderResponse, error) {
+	order, err := uc.repository.ReadOrder(orderId)
+	if err != nil {
+		return nil, err
+	}
+	response := &model.GetOrderResponse{
+		OrderId: orderId,
+		Order:   *order,
+	}
+	return response, nil
 }

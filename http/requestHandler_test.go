@@ -78,13 +78,15 @@ func TestHandleGetOrder(t *testing.T) {
 		RequestURI: "/order/" + orderId,
 	}
 	expectedGetOrderResponse := &model.GetOrderResponse{
-		OrderId:   orderUUID,
-		OrderName: "pizza",
-		State:     "pending",
-		PickUp:    false,
+		OrderId: orderUUID,
+		Order: model.Order{
+			OrderName: "pizza",
+			State:     "pending",
+			PickUp:    false,
+		},
 	}
 
-	mockGetOrderUsecase.EXPECT().GetOrder(gomock.Any(), orderUUID).Times(1).Return(expectedGetOrderResponse, nil)
+	mockGetOrderUsecase.EXPECT().GetOrder(orderUUID).Times(1).Return(expectedGetOrderResponse, nil)
 
 	handler.handleGetOrder(ctx)
 
