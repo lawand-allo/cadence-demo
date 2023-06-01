@@ -3,9 +3,8 @@ package model
 import "github.com/google/uuid"
 
 type CreateOrderRequest struct {
-	OrderName   string `json:"name" binding:"required"`
-	WaitingTime int    `json:"waitingTime" binding:"required"`
-	PickUp      bool   `json:"pickUp,omitempty""`
+	OrderName string `json:"name"`
+	PickUp    bool   `json:"pickUp,omitempty""`
 }
 
 type GetOrderResponse struct {

@@ -4,24 +4,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewRouter() *gin.Engine {
-	router := gin.New()
+func (h *Handler) setupRoutes() {
 
-	router.GET("/", gin.HandlerFunc(func(ctx *gin.Context) {
-		handleIndex(ctx)
+	h.router.GET("/", gin.HandlerFunc(func(ctx *gin.Context) {
+		h.handleIndex(ctx)
 	}))
-	router.GET("/health", gin.HandlerFunc(func(ctx *gin.Context) {
-		handleHealth(ctx)
+	h.router.GET("/health", gin.HandlerFunc(func(ctx *gin.Context) {
+		h.handleHealth(ctx)
 	}))
 
-	commonGroup := router.Group("/order")
+	commonGroup := h.router.Group("/order")
 	{
 		commonGroup.POST("/", gin.HandlerFunc(func(ctx *gin.Context) {
-			handlePostOrder(ctx)
+			h.handlePostOrder(ctx)
 		}))
-		commonGroup.GET("/:tripId", gin.HandlerFunc(func(ctx *gin.Context) {
-			handleGetOrder(ctx)
+		commonGroup.GET("/:orderId", gin.HandlerFunc(func(ctx *gin.Context) {
+			h.handleGetOrder(ctx)
 		}))
 	}
-	return router
 }
